@@ -1,0 +1,4 @@
+*.cpp.*
+*.h.*
+.vscode/settings.json
+node_modules

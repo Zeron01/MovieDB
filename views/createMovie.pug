@@ -1,0 +1,111 @@
+html
+    head
+        title Create Movie
+        style.
+            body{
+                background-color: orange;
+                }
+    div#navBar
+        a(href="/movies") Main page
+        <br>
+        a(href="/people") Actors/Directors/Writers
+        <br>
+        a(href="/users") Community
+        <br>
+        if session.contributor == true
+            a(href="/createPerson") Create Person
+            br
+            a(href="/createMovie") Create Movie
+            br
+        if session.username!=null 
+          a(href="/users/"+ session.username) Profile
+          <br> 
+          a(href="/logout") Logout
+          <br>
+        else
+          a(href="/login.pug") Login
+    br
+    br
+    br
+    br
+    br
+    body
+        if(session.contributor != null)
+            if(session.contributor == true)
+            form(action="/createMovie" method ="POST")
+                label Create A Movie
+                br
+                label(for="title") Title:
+                input(type = "text" name ="title")
+                br
+                br
+                label(for="title") Plot:
+                input(type = "text" name ="plot")
+                br
+                br
+                label(for="title") Year:
+                input(type = "text" name ="year")
+                br
+                br
+                label(for="title") Runtime:
+                input(type = "text" name ="runtime")
+                br
+                br
+                label(for="title") Released:
+                input(type = "text" name ="released")
+                br
+                br
+                label(for="title") Genre:
+                select(name="genres")
+                    option(value="Action") Action
+                    option(value="Adventure") Adventure
+                    option(value="Comedy") Comedy
+                    option(value="Fantasy") Fantasy
+                    option(value="Documentary") Documentary
+                    option(value="Horror") Horror
+                br
+                label(for="title") Rating
+                select(name="rated")
+                    option(value="G") G
+                    option(value="PG") PG
+                    option(value="PG 13") PG 13
+                    option(value="T") T
+                    option(value="R") R
+                    option(value="C") C
+                br
+                button(type="submit") Add Movie
+                br
+                br
+            form(action ="/addPerson",method = "POST")
+                label(for="title") People (Director/Actor/Writer):
+                input(type = "text" name ="personName")
+                select(name="typeofPerson")
+                    option(value="Director") Director
+                    option(value="Writer") Writer
+                    option(value="Actor") Actor
+                
+                button(type="submit") Add Person
+                br
+                br
+                
+                if Directors != null
+                    label Directors
+                    ul
+                        each val in Directors
+                            a(href="/people/"+val) #{val}
+                            br
+                if Writers != null
+                    label Writers
+                    ul
+                        each val in Writers
+                            a(href="/people/"+val) #{val}
+                            br
+                if Actors != null
+                    label Actors
+                    ul
+                    ul
+                        each val in Actors
+                            a(href="/people/"+val) #{val}
+                            br
+        else
+            label Invalid Location

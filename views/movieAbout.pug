@@ -1,0 +1,270 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Movie Information
+    style.
+      body {
+        background-image: url('/images/poster.avif')
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .movie-container {
+        margin-top: 40px;
+        background-color: #333; /* Dark gray background */
+        padding: 20px;
+        display: flex;
+        max-width: 60%;
+      }
+
+      .movie-poster {
+        background-color: #666; /* Light gray background */
+        width: 500px;
+        height: 500px;
+        padding: 20px;
+        box-sizing: content-box; /* Keep the background inside the specified dimensions */
+      }
+      .movie-info {
+        padding: 20px;
+        max-width: 80%;
+        color: white; /* Text color inside the container */
+      }
+      /* Style for genre, directors, actors, and writers links */
+      .movie-info a {
+        color: white; /* Set link color to white */
+        text-decoration: none; /* Remove underline */
+        transition: background-color 0.3s, transform 0.2s;
+        display: inline-block;
+        margin-right: 5px;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+
+      .movie-info a:hover {
+        background-color: #00008B; /* Dark blue background on hover */
+        transform: scale(1.05); /* Increase size on hover */
+      }
+      .plot-container {
+        margin-top: 40px; /* Add margin to create space between the plot container and the movie poster */
+        border: 1px solid #ddd;
+        padding: 10px;
+        background-color: #000000;
+      }
+      .plot {
+        hr
+        p(style='color: white;') #{Movie.Plot}
+      }
+      .navbar {
+        border:2px solid gray;
+        background-image: url('/images/black.jpg');
+        padding: 10px 0; /* Add some padding to the navbar */
+        text-align: center;
+        border-radius: 10px; /* Rounded corners */
+        margin-top: 40px; /* Increase margin to move the navbar lower */
+        margin-bottom: 100px;
+      }
+
+      .navbar a {
+        color: white; /* Text color for the navbar links */
+        text-decoration: none; /* Remove underline from links */
+        margin: 0 15px; /* Add some space between links */
+        font-size: 18px; /* Adjust font size as needed */
+        padding: 10px 20px; /* Add padding to make them look like buttons */
+        border-radius: 30px; /* Rounded edges for the buttons */
+        border: 2px solid transparent; /* Transparent border initially */
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s; /* Smooth transitions */
+      }
+
+      .navbar a:hover {
+        background-color: white; /* Background color on hover */
+        color: black; /* Text color on hover */
+        border-color: black; /* Border color on hover */
+      }
+
+      /* Add styles for navbar buttons */
+      .navbar .navbar-button {
+        margin: 0;
+      }
+
+      /* Add styles for user links */
+      .navbar .user-links {
+        margin-left: auto; /* Push user links to the right */
+      }
+
+            .navbar-buttons {
+        display: flex;
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
+      }
+
+      .navbar-buttons a {
+        margin-left: 10px; /* Add spacing between the links */
+      }
+            .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #000000;
+        min-width: 120px; /* Adjust the min-width as needed */
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content a {
+        color: white;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Style for Profile and Logout links */
+      .navbar-buttons a {
+        margin-left: 10px; /* Add spacing between the links */
+      }
+      /* Style for the search form */
+      .search-form {
+        display: flex;
+        align-items: center; /* Center vertically */
+        margin-left: auto; /* Push to the right */
+      }
+
+      /* Style for the search input */
+      .search-input {
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        background-color: rgba(0, 0, 0, 0.1); /* Light black background */
+        color: white;
+        font-size: 16px;
+        outline: none;
+        transition: background-color 0.3s, color 0.3s;
+        width: 200px; /* Adjust the width as needed */
+      }
+
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.5); /* Placeholder text color */
+      }
+
+      .search-input:focus {
+        background-color: rgba(0, 0, 0, 0.3); /* Darker background on focus */
+      }
+
+      /* Style for the search button */
+      .search-button {
+        background-color: #ff3f00; /* Stylish orange color */
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-left: 10px; /* Add spacing between input and button */
+        outline: none;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .search-button:hover {
+        background-color: #ff5900; /* Darker orange color on hover */
+      }
+      
+      
+  body
+    .header
+      h1(style='color: white; font-size: 36px;') MOVIE DB
+  .n
+    h2(style='color: black;') Stardust Streaming
+    if session.username!=null
+      label Welcome #{session.username}
+    .navbar
+      .navbar-buttons
+        if session.username != null
+          .dropdown
+            a(href="#" class="navbar-button") ... &#9660;
+            .dropdown-content
+              a(href="/users/"+ session.username, class="navbar-button") My Profile
+              a(href="/logout", class="navbar-button") Logout
+        else
+          a(href="/login.pug", class="navbar-button") Login
+        a(href="/movies", class="navbar-button") Home
+        a(href="/people", class="navbar-button") People
+        a(href="/users", class="navbar-button") Community
+        .search-form
+          form(action='/movies', method='post')
+            input(type='text', name='searchMovie', class='search-input', placeholder='Search for a Movie')
+            button(type='submit', class='search-button') Search
+    if (Movie != null)
+      .container
+        .movie-container(style='min-height: 900px;')
+          .movie-poster
+            img(src=Movie.Poster, height='500', width='500', border='1x')
+            .plot-container(style='border: 1px solid #ddd; padding: 10px; background-color: #000000;')
+              .plot
+                hr
+                p(style='color: white;') #{Movie.Plot}
+    
+          .movie-info
+            title #{Movie.Title}
+            label ID: #{Movie.numID}
+            br
+            label Name: #{Movie.Title}
+            br
+            label Year: #{Movie.Year}
+            br
+            label Rated: #{Movie.Rated}
+            br
+            label Released: #{Movie.Released}
+            br
+            label Runtime: #{Movie.Runtime}
+            br
+            hr
+            label Genre:
+            if (Movie.genres != null)
+              ul
+                each genre in Movie.genres
+                  li
+                    a(href=`/movies?genre=${genre}`) #{genre}
+            hr
+            label Directors:
+            if (Movie.DirectorName != null)
+              ul
+                each director in Movie.DirectorName
+                  li
+                    a(href=`/people/${director}`) #{director}
+            hr
+            label Actors:
+            if (Movie.ActorName != null)
+              ul
+                each actor in Movie.ActorName
+                  li
+                    a(href=`/people/${actor}`) #{actor}
+            hr
+            label Writers:
+            if (Movie.WriterName != null)
+              ul
+                each writer in Movie.WriterName
+                  li
+                    a(href=`/people/${writer}`) #{writer}
+            if (Movie.similar != null)
+              hr
+              label Recommended Movies
+                ul
+                  each recommendedMovie in Movie.similar
+                    li
+                     a(href="/movies/"+recommendedMovie.numID) #{recommendedMovie.Title}

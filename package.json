@@ -1,0 +1,20 @@
+{
+  "name": "newfolder",
+  "version": "1.0.0",
+  "description": "Template Engine: PUG\r Used Express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alert": "^5.0.6",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "pug": "^3.0.2",
+    "puh": "^1.0.0"
+  }
+}

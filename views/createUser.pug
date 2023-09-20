@@ -1,0 +1,22 @@
+html
+    title Registration Page
+    div#navBar
+        a(href="/movies") Main page
+        <br> 
+        a(href="/login.pug") Already have an Account?
+    head
+    p Register Below
+    body
+        form(action="/createUser" method ="POST")
+            label(for="username") Username:
+            input(type = "text" name ="username")
+            br
+            label(for="password") Password:
+            input(type="text" name="password")
+            br
+            button(type="submit") Register
+    br
+    if (Invalid !=null)
+        label Invalid Input
+    if(Exists !=null)
+        label User already exists

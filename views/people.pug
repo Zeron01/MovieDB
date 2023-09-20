@@ -1,0 +1,34 @@
+html
+    head
+        title People Page
+    style.
+        body{
+            background-color:{{purple}};
+        }
+    div#navBar
+        a(href="/movies") Main page
+        <br>
+        a(href="/people") Actors/Directors/Writers
+        <br>
+        a(href="/users") Community
+        <br>
+        if session.username!=null 
+          a(href="/users/"+ session.username) Profile
+          <br> 
+          a(href="/logout") Logout
+          <br>
+        else
+          a(href="/login.pug") Login
+    body
+        form(action='/people' method='post')
+            label(for="searchPeople") Search for People
+            br
+            input(type='text' name='searchPeople')
+            button(type ='submit') Search
+
+        p All People
+        ul
+            each val in People
+                a(href="/people/"+val.name) #{val.name}
+                <br>
+ 

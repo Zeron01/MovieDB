@@ -1,0 +1,129 @@
+html
+    head
+        title User Page
+        style.
+            body{
+                background-color: orange;
+                }
+    div#navBar
+        a(href="/movies") Main page
+        <br>
+        a(href="/people") Actors/Directors/Writers
+        <br>
+        a(href="/users") Community
+        <br>
+        if session.contributor == true
+            a(href="/createPerson") Create Person
+            br
+            a(href="/createMovie") Create Movie
+            br
+        if session.username!=null 
+          a(href="/users/"+ session.username) Profile
+          <br> 
+          a(href="/logout") Logout
+          <br>
+        else
+          a(href="/login.pug") Login
+        p About User
+        div#UserDisplay
+        <br>
+        <br>
+            if session.loggedin && (session.username == User.username)
+                label Welcome #{User.username}
+                form(action='/contributing' method='post')
+                    if User.contributor == true
+                        button(type='submit') unContribute
+                    else 
+                        button(type='submit') Contribute
+                div#followersList
+                    br
+                    if(User.following.length ==0)
+                        label You are following no one currently
+                    else
+                        label Here are the People you follow
+                    ul
+                        each val in User.following
+                            a(href="/people/"+val) #{val}
+                            <br>
+                div#followPList
+                    br
+                    if(User.followingUsers.length !=0)
+                        label Here are Users you follow
+                        ul
+                            each val in User.followingUsers
+                                a(href="/users/"+val) #{val}
+                div#recommendedMovies
+                    br
+                    label Recommended Movies
+                    br
+                    ul
+                        each x in User.recommend
+                            a(href="/movies/"+x.numID) #{x.Title}
+                            <br>
+                            img(src=x.Poster height='100' ,width='100' border='1x')
+                            <br>
+
+                #reviewsWritten
+                    br
+                    if(User.reviews.length==0)
+                        label No reviews written so far
+                    else
+                        label Here are the reviews you've written
+                    br
+                    ul
+                        each x in User.reviews
+                            a(href="/movies/"+x.numID) Movie: #{x.title}<br>
+                            label Rating: #{x.rating}/5<br>
+                            label Review: #{x.review}
+                            <br>
+                            <br>
+            else
+                div#UserDisplay
+                <br>
+                <br>
+                    if User!=null
+                        label Viewing #{User.username}
+                        if (session.loggedin == true)
+                            form(action='/followUser' method='post')
+                                if following == true
+                                    button(type='submit') unfollow
+                                if following == false
+                                    button(type='submit') follow
+                        if User.contributor==true
+                            label {contributor}
+                            br
+                        div#followersList
+                            br
+                            if(User.following.length ==0)
+                                label Following No One
+                            else
+                                label Following
+                            ul
+                                each val in User.following
+                                    a(href="/people/"+val) #{val}
+                                    <br>
+                        div#recommendedMovies
+                            br
+                            br
+                            ul
+                                each x in User.recommend
+                                    a(href="/movies/"+x.numID) #{x.Title}
+                                    <br>
+                                    img(src=x.Poster height='100' ,width='100' border='1x')
+                                    <br>
+
+                        #reviewsWritten
+                            br
+                            if(User.reviews.length==0)
+                                label No reviews written so far
+                            else
+                                label Written Reviews
+                            br
+                            ul
+                                each x in User.reviews
+                                    a(href="/movies/"+x.numID) Movie: #{x.title}<br>
+                                    label Rating: #{x.rating}/5<br>
+                                    label Review: #{x.review}
+                                    <br>
+                                    <br>
+                        

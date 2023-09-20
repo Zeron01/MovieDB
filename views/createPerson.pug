@@ -1,0 +1,50 @@
+html
+    head
+        title User Page
+        style.
+            body{
+                background-color: orange;
+                }
+    div#navBar
+        a(href="/movies") Main page
+        <br>
+        a(href="/people") Actors/Directors/Writers
+        <br>
+        a(href="/users") Community
+        <br>
+        if session.username!=null 
+          a(href="/users/"+ session.username) Profile
+          <br> 
+          a(href="/logout") Logout
+          <br>
+        else
+          a(href="/login.pug") Login
+    br
+    br
+    br
+    br
+    br
+    body
+        if(session.contributor !=null)
+            if(session.contributor == true)
+                form(action="/createPerson" method ="POST")
+
+                    label Create an Actor/Director/Writer
+                    br
+                    label(for="username") Name:
+                    input(type = "text" name ="name")
+                    br
+                    button(type="submit") Add Person
+                br
+                if(added!=null)
+                    label Added Sucessfully
+                if(exists != null)
+                    label Failed, Actor Exists
+                if(invalid != null)
+                    label Invalid Input
+            else
+                label Contributors Only
+        else
+            label Contributors Only
+        
+        
