@@ -1,78 +1,29 @@
 doctype html
 html(lang="en")
   head
+    link(rel="stylesheet", href="/css/styles.css")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Login
-    style.
-      /* Add your CSS styles here */
-      body {
-        background-color: lavender;
-        text-align: center;
-      }
-      #login-container {
-        width: 80%;
-        max-width: 500px; /* Added max-width */
-        height: auto;
-        border: 1px solid #555;
-        margin: 0 auto;
-        padding: 20px;
-        border-radius: 10px;
-        background-color: white;
-      }
-      h1 {
-        font-size: 36px;
-      }
-      label {
-        font-size: 18px;
-        margin-right: 10px;
-      }
-      input[type="text"], input[type="password"] {
-        width: 100%;
-        max-width: 400px; /* Added max-width to limit stretching */
-        padding: 10px;
-        font-size: 16px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-      }
-      button[type="submit"], a.register-button {
-        background-color: #ff3f00;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        outline: none;
-        text-decoration: none; /* Remove underlines for the anchor element */
-        display: inline-block; /* Ensure the button and link appear side by side */
-        margin-right: 10px; /* Add spacing between the button and link */
-      }
-      button[type="submit"]:hover, a.register-button:hover {
-        background-color: #ff5900;
-      }
-      .error-message {
-        color: red;
-        font-size: 16px;
-        margin-top: 10px;
-      }
-  body
-    div#login-container
-      h1 Movie DB
-      form(action="/login.pug", method="POST")
-        label(for="username") Username:
-        input(type="text" name="username")
+  body.login
+    .header
+      h1 MOVIE DB
+    .n
+      include navbar.pug
+    div#login-container.login
+      h1.login Sign In
+      form(action="/login", method="POST")
+        label.login(for="username") Username:
+        input(type="text" name="username" class="login")
         br
-        label(for="password") Password:
-        input(type="password" name="password")
+        label.login(for="password") Password:
+        input(type="password" name="password" class="login")
         br
-        button(type="submit") Login
-        a(href="/createUser" class="register-button") Register User
+        button(type="submit" class="login") Login
+        a(href="/createUser" class="register-button login") Register User
         if(Incorrect != null)
           br
-          .error-message Wrong password!
+          .error-message.login Wrong password!
         else if(UserExist != null)
           br
-          .error-message Username does not exist
+          .error-message.login Username does not exist

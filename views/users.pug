@@ -1,35 +1,21 @@
-html
-    head
-        title Users Page
-    style.
-        body{
-            background-color:{{purple}};
-        }
-    div#navBar
-        a(href="/movies") Main page
-        <br>
-        a(href="/people") Actors/Directors/Writers
-        <br>
-        a(href="/users") Community
-        <br>
-        if session.username!=null 
-          a(href="/users/"+ session.username) Profile
-          <br> 
-          a(href="/logout") Logout
-          <br>
-          if(session.contributor == true)
-              label YOU ARE CONTRIBUTOR
-              br
-        else
-          a(href="/login.pug") Login
-    body
-        form(action='/users' method='post')
-            label(for="searchUsers") Search for Users
-            br
-            input(type='text' name='searchUsers')
-            button(type ='submit') Search
-        p All Users
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet", href="/css/styles.css")
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Community
+  body
+    .header
+      h1 MOVIE DB
+    .n
+      include navbar.pug
+      .users-container
+        .search-form-users
+          form(action='/users', method='get')
+            input(type='text', name='name', class='search-input-users', placeholder='Search for Users')
+            button(type ='submit', class='search-button-users') Search
         ul
-            each val in users
-                a(href="/users/"+val.username) #{val.username}
-                <br>
+          each val in users
+            li
+              a(href="/users/"+val.username, class="users-link") #{val.username}

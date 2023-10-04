@@ -1,23 +1,12 @@
-html
-    head
-        title Error Page
-        div#navBar
-            a(href="/movies") Main page
-            <br>
-            a(href="/people") Actors/Directors/Writers
-            <br>
-            a(href="/users") Community
-            <br>
-            if session.username!=null 
-                a(href="/users/"+ session.username) Profile
-                <br> 
-                a(href="/logout") Logout
-                <br>
-                if(session.contributor == true)
-                    label YOU ARE CONTRIBUTOR
-                    br
-            else
-                a(href="/login.pug") Login
-        body
-
-        p Page does not Exist
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet",href="/css/styles.css")
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Error
+  body
+    .header
+      h1 ERROR PAGE
+  .n
+    include navbar.pug 

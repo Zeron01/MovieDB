@@ -1,51 +1,31 @@
-html
-    div#navBar
-        a(href="/movies") Main page
-        <br>
-        a(href="/people") Actors/Directors/Writers
-        <br>
-        a(href="/users") Community
-        <br>
-        if session.username!=null 
-          a(href="/users/"+ session.username) Profile
-          <br> 
-          a(href="/logout") Logout
-          <br>
-        else
-          a(href="/login.pug") Login
-
-    head
-        style.
-            body{
-                background-color: orange;
-                }
-    if Person !=null
-        title #{Person.name}
-        if session.username != null
-            form(action='/followPerson' method='post')
-                if following == true
-                    button(type='submit') unfollow
-                if following == false
-                    button(type='submit') follow
-        p Actor Information (Photo)
-        img(src=Person.poster height='300' ,width='200')
-        <br>
-        label Name: #{Person.name}
-        br
-        label Movies in:
-        if (Person.movies != null)
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet", href="/css/styles.css")
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Movie Information
+  body
+    .header
+      h1 MOVIE DB
+    .n
+      include navbar.pug
+    if Person != null
+      .actor-container
+        .actor-poster
+          img(src=Person.poster height='300', width='200')
+        .actor-info
+          h1 #{Person.name}
+          hr
+          h3 Movies in:
+          if (Person.movies != null)
             ul
-                each val in Person.movies
-                    a(href="/movies/"+val.numID) #{val.Title}
-                    br
-        br
-        body
-            //- if session.loggedin
-            //-     form(action='/toggleFollow' method='post')
-            //-         if User.contributor == true
-            //-             button(type='submit') unContribute
-            //-         else 
-            //-             button(type='submit') Contribute
-                    
-
-        
+              each val in Person.movies
+                li
+                  a(href="/movies/"+val.numID) #{val.Title}
+          if session.username != null
+            form(action='/followPerson' method='post')
+              if following == true
+                button(type='submit') Unfollow
+              else
+                button(type='submit') Follow

@@ -1,34 +1,22 @@
-html
-    head
-        title People Page
-    style.
-        body{
-            background-color:{{purple}};
-        }
-    div#navBar
-        a(href="/movies") Main page
-        <br>
-        a(href="/people") Actors/Directors/Writers
-        <br>
-        a(href="/users") Community
-        <br>
-        if session.username!=null 
-          a(href="/users/"+ session.username) Profile
-          <br> 
-          a(href="/logout") Logout
-          <br>
-        else
-          a(href="/login.pug") Login
-    body
-        form(action='/people' method='post')
-            label(for="searchPeople") Search for People
-            br
-            input(type='text' name='searchPeople')
-            button(type ='submit') Search
-
-        p All People
-        ul
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet", href="/css/styles.css")
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title List of People
+  body
+    .header
+      h1 MOVIE DB
+    .n
+      include navbar.pug 
+      .people-container 
+        .search-form-people
+          form(action='/people', method='get')
+            input(type='text', name='name', class='search-input-people', placeholder='Search for People')
+            button(type='submit', class='search-button-people') Search
+        if (People != null && People.length > 0)
+          ul
             each val in People
-                a(href="/people/"+val.name) #{val.name}
-                <br>
- 
+              li
+                a(href="/people/"+val.name, class="people-link") #{val.name}
