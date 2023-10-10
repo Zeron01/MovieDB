@@ -34,7 +34,7 @@ html(lang="en")
               form(action='/movies/'+Movie.numID, method='post')
                 .write-review
                   label Write Your Review 
-                  textarea
+                  textarea(name="writeReview")
                   br
                   label Rating
                   select(name="Rating") Rating

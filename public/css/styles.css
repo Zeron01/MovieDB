@@ -192,65 +192,87 @@
     max-width: 100%; /* Make sure the image fits within its container */
   }
   .movies-container {
+    background-color: rgba(46, 45, 45, 1);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-  }
+}
 
-  .movie {
+.movie {
     margin-top: 10px;
-    position: relative; /* Add a position property to create a stacking context */
+    position: relative;
     background-color: #222222;
-    padding: 20px;
     text-align: center;
     border: 2px solid gray;
-    border-radius: 10px; /* Rounded corners */
-    transition: transform 0.2s, background-color 0.2s; /* Add background-color transition */
-    overflow: hidden; /* Hide overflowing overlay */
-  }
+    border-radius: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    height: 400px; /* Fixed height for movie containers */
+    min-height: 300px; /* Minimum height for smaller screens */
+    overflow: hidden; /* Hide any content that overflows */
+}
 
-  .movie::before {
+/* Reduce the size of movie posters */
+.movie img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Ensure images fit within their containers */
+}
+
+.movie::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.2s; /* Add opacity transition */
-    pointer-events: none; /* Allow clicks to pass through the overlay */
-  }
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+}
 
-  /* Adjust styles on hover */
-  .movie:hover {
-    background-color: #ddd; /* Change to a darker background color */
+/* Adjust styles on hover */
+.movie:hover {
+    background-color: #ddd;
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  /* Show the overlay on hover */
-  .movie:hover::before {
+/* Show the overlay on hover */
+.movie:hover::before {
     opacity: 1;
-  }
+}
 
-  @media (min-width: 768px) {
+/* Media queries for adjusting grid columns */
+@media (min-width: 768px) {
     .movies-container {
-      grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
-  }
+}
 
-  @media (min-width: 992px) {
+@media (min-width: 992px) {
     .movies-container {
-      grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
-  }
+}
 
-  @media (min-width: 1200px) {
+@media (min-width: 1200px) {
     .movies-container {
-      grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(7, 1fr);
     }
+}
+@media (min-width: 2000px) {
+  .movies-container {
+      grid-template-columns: repeat(10, 1fr);
   }
+}
+
 
 /* Login page */
 body.login {

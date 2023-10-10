@@ -3,8 +3,9 @@ const express = require('express');
 const { get } = require('http');
 const path = require('path');
 const fs = require('fs');
-var movies = require('./movies.json');
-var people = require('./people.json');
+let movies = require('./movies.json');
+let people = require('./people.json');
+let users = [];
 const { moveMessagePortToContext } = require('worker_threads');
 const movieFilePath = path.join(__dirname, 'movies.json');
 const peopleFilePath = path.join(__dirname, 'people.json');
@@ -26,7 +27,7 @@ app.get("/login",getLogin);
 app.post("/login",postLogin);
 app.get("/movies",parseQueryMovies,getFilms);
 app.get("/createUser",getCreateUser);
-app.post("/createUser",getCreateUser);
+app.post("/users",getCreateUser);
 app.get("/logout",logout);
 app.get("/users/:userID",sendUser);
 app.get("/movies/:movieID",sendMovie);
@@ -36,13 +37,13 @@ app.get("/people",parseQueryPeople,sendPeople);
 app.post("/movies/:movieID",updateMovie,sendMovie);
 app.post("/contributing",toggleContributeStatus);
 app.get("/users",parseQueryUsers,getUsers);
-app.get("/createPerson",getCreatePerson);
-app.post("/createPerson",getCreatePerson);
+//app.get("/createPerson",getCreatePerson);
+//app.post("/createPerson",getCreatePerson);
 app.post("/followPerson",followPerson)
 app.post("/followUser",followUser);
 app.post("/addPerson",addPerson);
-app.post("/createMovie",getCreateMovie);
-app.get("/createMovie",getCreateMovie);
+//app.post("/createMovie",getCreateMovie);
+//app.get("/createMovie",getCreateMovie);
 app.use((req, res, next) => {
   res.format({
     'text/html': function(){
@@ -126,8 +127,6 @@ function getCreateMovie(req,res){
     res.render("createMovie.pug",{session:req.session,Directors:req.session.Directors,Writers:req.session.Writers,Actors:req.session.Actors});
   }
   else if(req.method == "POST"){
-    console.log(req.body);
-    console.log(req.session);
     if(req.session.Directors.length > 0 && req.session.Writers.length > 0 && req.session.Actors.length>0){
       if(req.body.title!=null && req.body.title.length>0
         &&req.body.plot!=null && req.body.plot.length>0
@@ -670,7 +669,7 @@ function similarMovies(movieT){
   }
 }
 function initLogin(){
-    console.log("INITIALIZING USERS/REVIEWS")
+    console.log("INITIALIZING USERS")
     users.push(new User("Nirojan",12345));
     users.push(new User("Inder",12345));
     users[0].following.push("Tom Hanks");
@@ -680,19 +679,6 @@ function initLogin(){
     users[0].genres.push("Action");
     users[0].genres.push("Adventure");
     users[1].genres.push("Comedy");
-    users[0].contributor=true;
-    users[0].reviews.push({title: "Toy Story", rating: 4, review: "Amazing movie for the kids. Brought lots of fun of joy back when I was a kids. It's still a great movie and is still watchable by today's youth. I'd highly recommend it",numID: 0})
-    users[0].reviews.push({title: "Jumanji", rating: 3, review: "Movie had an interesting plot. Probably one of the very few unique movies out there. It however got slow as the end came by. It was a great movie nonetheless",numID: 1})
-    movies[0].reviews = [];
-    movies[1].reviews = [];
-    movies[0].reviews.push({text: "Rating: 4/5: -->"+users[0].reviews[0].review+"\n",username:users[0].username});
-    movies[1].reviews.push({text: "Rating: 3/5: -->"+users[0].reviews[1].review+"\n",username:users[0].username});
-    movies[0].average = 4;
-    movies[0].totalRating = 1;
-    movies[0].totalScores = 4;
-    movies[1].average = 3;
-    movies[1].totalRating = 1;
-    movies[1].totalScores = 3;
 }
 function initReviews(){
   for(i=0;i<movies.length;i++){
@@ -728,7 +714,7 @@ function initReviews(){
     y++;
   }
 }
-let users = [];
+
 initLogin();
 initReviews();
 console.log("Total people in the Database: "+people.length);

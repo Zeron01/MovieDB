@@ -1,22 +1,28 @@
-html
+doctype html
+html(lang="en")
+  head
     title Registration Page
-    div#navBar
-        a(href="/movies") Main page
-        <br> 
-        a(href="/login.pug") Already have an Account?
-    head
-    p Register Below
+    link(rel="stylesheet", href="/css/styles.css")
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body(style="background-color: #666; text-align: center;")
+    .header
+      h1 MOVIE DB
+    .n
+      include navbar.pug
     body
-        form(action="/createUser" method ="POST")
-            label(for="username") Username:
-            input(type = "text" name ="username")
-            br
-            label(for="password") Password:
-            input(type="text" name="password")
-            br
-            button(type="submit") Register
-    br
-    if (Invalid !=null)
-        label Invalid Input
-    if(Exists !=null)
-        label User already exists
+      div#login-container.login
+        form(action="/users", method="POST")
+          h1.login Register User
+          label.login(for="username") Username:
+          input(type="text" name="username" class="login")
+          br
+          label.login(for="password") Password:
+          input(type="password" name="password" class="login")
+          br
+          button(type="submit" class="login") Register
+      br
+      if (Invalid != null)
+        .error-message.login Invalid Input
+      if (Exists != null)
+        .error-message.login User already exists
